@@ -9,8 +9,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Cinzel:wght@700&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
   
-  <!-- Tailwind CSS & jsPDF Generator -->
+  <!-- Tailwind CSS, Supabase SDK & jsPDF Generator -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
   <script>
@@ -35,22 +36,11 @@
       background-color: #0a0c10;
       color: #f3f4f6;
     }
-    .code-font {
-      font-family: 'Fira Code', monospace;
-    }
-    .custom-scrollbar::-webkit-scrollbar {
-      width: 6px;
-    }
-    .custom-scrollbar::-webkit-scrollbar-track {
-      background: #0d1117;
-    }
-    .custom-scrollbar::-webkit-scrollbar-thumb {
-      background: #23293a;
-      border-radius: 4px;
-    }
-    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-      background: #f59e0b;
-    }
+    .code-font { font-family: 'Fira Code', monospace; }
+    .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: #0d1117; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: #23293a; border-radius: 4px; }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #f59e0b; }
   </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between custom-scrollbar">
@@ -58,7 +48,6 @@
   <!-- ================= TOP NAVIGATION ================= -->
   <nav class="sticky top-0 z-50 bg-[#131722]/90 backdrop-blur-md border-b border-brandBorder px-4 sm:px-8 py-3.5 flex justify-between items-center">
     <div class="flex items-center gap-3 cursor-pointer" onclick="navigateTo('home')">
-      <!-- Profile Photo / Cyber Avatar in Navbar -->
       <div class="relative w-10 h-10 rounded-full border-2 border-brandAmber overflow-hidden bg-gray-800 flex items-center justify-center shadow-lg shadow-brandAmber/20">
         <img id="navAvatar" src="logo.png" onerror="this.src='https://images.unsplash.com/photo-1534972195531-a756b1126f24?auto=format&fit=crop&w=150&q=80'" alt="SudX" class="w-full h-full object-cover">
       </div>
@@ -68,7 +57,6 @@
       </div>
     </div>
 
-    <!-- Right Controls: Drawer Toggle -->
     <div class="flex items-center gap-3">
       <span id="userStatusBadge" class="hidden text-xs bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 px-3 py-1 rounded-full font-medium">
         ● Online
@@ -81,46 +69,30 @@
     </div>
   </nav>
 
-  <!-- ================= SIDE DRAWER (3 LINKS ONLY) ================= -->
+  <!-- ================= SIDE DRAWER ================= -->
   <div id="sideDrawer" class="fixed inset-y-0 right-0 w-72 bg-brandCard border-l border-brandBorder p-6 flex flex-col justify-between transform translate-x-full transition-transform duration-300 ease-in-out z-50 shadow-2xl">
     <div>
       <div class="flex justify-between items-center pb-5 border-b border-brandBorder">
-        <div class="flex items-center gap-2">
-          <span class="text-brandAmber font-bold text-lg">SudX Menu</span>
-        </div>
+        <span class="text-brandAmber font-bold text-lg">SudX Menu</span>
         <button onclick="toggleDrawer()" class="text-gray-400 hover:text-white p-1 rounded-lg">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-          </svg>
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
         </button>
       </div>
 
-      <!-- 3 Primary Navigation Links -->
       <nav class="flex flex-col gap-3 mt-6">
         <button onclick="navigateTo('home')" class="flex items-center gap-3 w-full text-left px-4 py-3 rounded-xl hover:bg-brandBorder text-gray-200 hover:text-brandAmber transition font-medium">
-          <svg class="w-5 h-5 text-brandAmber" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
-          </svg>
-          Home (ዋና ገጽ)
+          🏠 Home (ዋና ገጽ)
         </button>
-
         <button onclick="navigateTo('auth')" class="flex items-center gap-3 w-full text-left px-4 py-3 rounded-xl hover:bg-brandBorder text-gray-200 hover:text-brandAmber transition font-medium">
-          <svg class="w-5 h-5 text-brandAmber" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path>
-          </svg>
-          Login / Register
+          🔑 Login / Register
         </button>
-
         <button onclick="navigateTo('contact')" class="flex items-center gap-3 w-full text-left px-4 py-3 rounded-xl hover:bg-brandBorder text-gray-200 hover:text-brandAmber transition font-medium">
-          <svg class="w-5 h-5 text-brandAmber" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
-          </svg>
-          Contact Me (አግኙኝ)
+          📞 Contact Me (አግኙኝ)
         </button>
       </nav>
     </div>
 
-    <div id="drawerSessionBox" class="border-t border-brandBorder pt-4 text-xs text-gray-400">
+    <div class="border-t border-brandBorder pt-4 text-xs text-gray-400">
       <p class="font-medium text-gray-300">© 2026 SudX Academy</p>
       <p class="text-[11px] text-gray-500 mt-1">Creator: SudX (@sudx_dev)</p>
     </div>
@@ -131,13 +103,9 @@
   <!-- ================= MAIN CONTAINER ================= -->
   <main class="flex-grow max-w-5xl mx-auto w-full px-4 sm:px-6 py-8">
 
-    <!-- ================= VIEW 1: HOME PAGE ONLY ================= -->
+    <!-- VIEW 1: HOME PAGE -->
     <section id="view-home" class="space-y-12">
-      
-      <!-- Creator Hero Showcase Card -->
       <div class="relative overflow-hidden bg-gradient-to-b from-brandCard to-[#0c0f16] border border-brandBorder rounded-3xl p-6 sm:p-10 shadow-2xl">
-        <div class="absolute -top-24 -right-24 w-80 h-80 bg-brandAmber/10 rounded-full blur-3xl pointer-events-none"></div>
-
         <div class="flex flex-col md:flex-row items-center gap-8 relative z-10">
           <div class="relative shrink-0">
             <div class="w-36 h-36 sm:w-44 sm:h-44 rounded-3xl overflow-hidden border-2 border-brandAmber/80 shadow-2xl shadow-brandAmber/20">
@@ -160,82 +128,28 @@
             </p>
 
             <div class="flex flex-wrap items-center justify-center md:justify-start gap-3 pt-2">
-              <a href="https://t.me/SudX_Dev" target="_blank" class="px-3.5 py-1.5 rounded-xl bg-[#1e2433] hover:bg-brandAmber hover:text-black transition border border-brandBorder text-xs font-semibold flex items-center gap-2">
-                ✈️ @SudX_Dev
-              </a>
-              <a href="https://youtube.com/@sunx_dev" target="_blank" class="px-3.5 py-1.5 rounded-xl bg-[#1e2433] hover:bg-red-500 hover:text-white transition border border-brandBorder text-xs font-semibold flex items-center gap-2">
-                ▶️ YouTube
-              </a>
-              <a href="https://tiktok.com/@sudx_dev" target="_blank" class="px-3.5 py-1.5 rounded-xl bg-[#1e2433] hover:bg-pink-600 hover:text-white transition border border-brandBorder text-xs font-semibold flex items-center gap-2">
-                🎵 TikTok (@sudx_dev)
-              </a>
+              <a href="https://t.me/SudX_Dev" target="_blank" class="px-3.5 py-1.5 rounded-xl bg-[#1e2433] hover:bg-brandAmber hover:text-black transition border border-brandBorder text-xs font-semibold">✈️ @SudX_Dev</a>
+              <a href="https://youtube.com/@sunx_dev" target="_blank" class="px-3.5 py-1.5 rounded-xl bg-[#1e2433] hover:bg-red-500 hover:text-white transition border border-brandBorder text-xs font-semibold">▶️ YouTube</a>
+              <a href="https://tiktok.com/@sudx_dev" target="_blank" class="px-3.5 py-1.5 rounded-xl bg-[#1e2433] hover:bg-pink-600 hover:text-white transition border border-brandBorder text-xs font-semibold">🎵 TikTok (@sudx_dev)</a>
             </div>
 
             <div class="pt-4">
-              <button onclick="navigateTo('auth')" class="bg-brandAmber hover:bg-brandAmberHover text-black font-extrabold px-8 py-3.5 rounded-2xl shadow-xl shadow-brandAmber/25 transition transform hover:-translate-y-0.5 flex items-center justify-center gap-2 mx-auto md:mx-0 text-sm">
-                <span>ትምህርቱን ለመጀመር ተመዝገብ / ግባ</span>
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+              <button onclick="navigateTo('auth')" class="bg-brandAmber hover:bg-brandAmberHover text-black font-extrabold px-8 py-3.5 rounded-2xl shadow-xl shadow-brandAmber/25 transition text-sm">
+                ትምህርቱን ለመጀመር ተመዝገብ / ግባ →
               </button>
             </div>
           </div>
         </div>
       </div>
-
-      <!-- Course Overview Grid -->
-      <div>
-        <div class="text-center max-w-xl mx-auto mb-8">
-          <h2 class="text-2xl font-bold text-white">በስልጠናው ምን ምን እናስተምራለን?</h2>
-          <p class="text-gray-400 text-xs sm:text-sm mt-1">የኮርሱ ዝርዝር ትምህርቶች ከተመዘገቡ በኋላ ደረጃ በደረጃ ይከፈታሉ።</p>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          <div class="bg-brandCard border border-brandBorder rounded-2xl p-5 hover:border-brandAmber/50 transition">
-            <div class="w-12 h-12 rounded-xl bg-orange-500/10 border border-orange-500/20 text-orange-400 flex items-center justify-center text-xl mb-3">🏛️</div>
-            <h3 class="text-base font-bold text-white mb-1">HTML5 & Structure</h3>
-            <p class="text-gray-400 text-xs leading-relaxed">የድረ-ገጾች ጠንካራ አጽም አወቃቀር፣ ዘመናዊ ታጎች፣ እና የቅጽ (Form) አሰራሮች።</p>
-          </div>
-
-          <div class="bg-brandCard border border-brandBorder rounded-2xl p-5 hover:border-brandAmber/50 transition">
-            <div class="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-400 flex items-center justify-center text-xl mb-3">🎨</div>
-            <h3 class="text-base font-bold text-white mb-1">CSS3 & Responsive UI</h3>
-            <p class="text-gray-400 text-xs leading-relaxed">ለስልክና ለኮምፒውተር ምቹ (Responsive) የሆኑ Flexbox፣ CSS Grid እና አኒሜሽኖች።</p>
-          </div>
-
-          <div class="bg-brandCard border border-brandBorder rounded-2xl p-5 hover:border-brandAmber/50 transition">
-            <div class="w-12 h-12 rounded-xl bg-yellow-500/10 border border-yellow-500/20 text-yellow-400 flex items-center justify-center text-xl mb-3">⚡</div>
-            <h3 class="text-base font-bold text-white mb-1">JavaScript Logic</h3>
-            <p class="text-gray-400 text-xs leading-relaxed">ድረ-ገጾችን ህይወት የሚዘሩ አዝራሮች፣ DOM ማኒፑሌሽን፣ እና Event Listeners።</p>
-          </div>
-
-          <div class="bg-brandCard border border-brandBorder rounded-2xl p-5 hover:border-brandAmber/50 transition">
-            <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center text-xl mb-3">🗄️</div>
-            <h3 class="text-base font-bold text-white mb-1">Supabase & Database</h3>
-            <p class="text-gray-400 text-xs leading-relaxed">የተጠቃሚዎች ምዝገባ (Authentication) እና ዳታዎችን በደመና ላይ በነጻ የማስቀመጥ ዘዴ።</p>
-          </div>
-
-          <div class="bg-brandCard border border-brandBorder rounded-2xl p-5 hover:border-brandAmber/50 transition">
-            <div class="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/20 text-purple-400 flex items-center justify-center text-xl mb-3">📖</div>
-            <h3 class="text-base font-bold text-white mb-1">20 Google Drive PDFs</h3>
-            <p class="text-gray-400 text-xs leading-relaxed">ለእያንዳንዱ ክፍል የተዘጋጁ የተሟሉ አጋዥ መጽሐፍትን በቀጥታ በDrive እያነበቡና እያወረዱ መማር።</p>
-          </div>
-
-          <div class="bg-brandCard border border-brandBorder rounded-2xl p-5 hover:border-brandAmber/50 transition">
-            <div class="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-400 flex items-center justify-center text-xl mb-3">🏆</div>
-            <h3 class="text-base font-bold text-white mb-1">Official Certificate</h3>
-            <p class="text-gray-400 text-xs leading-relaxed">የራስህን ዌብሳይት ሰርተህ ስታስረክብ በስምህ የሚሰጥ ወርቃማ የSudX ሰርቲፊኬት።</p>
-          </div>
-        </div>
-      </div>
-
     </section>
 
-    <!-- ================= VIEW 2: AUTHENTICATION ================= -->
+    <!-- VIEW 2: AUTHENTICATION -->
     <section id="view-auth" class="hidden max-w-md mx-auto space-y-6">
       <div class="bg-brandCard border border-brandBorder rounded-3xl p-6 sm:p-8 shadow-2xl">
         <div class="text-center mb-6">
           <div class="w-14 h-14 rounded-2xl bg-brandAmber/10 border border-brandAmber/30 text-brandAmber flex items-center justify-center text-2xl mx-auto mb-3">🔐</div>
           <h2 class="text-2xl font-bold text-white">ይግቡ ወይም ይመዝገቡ</h2>
-          <p class="text-gray-400 text-xs mt-1">ወደ ኮርሱና ወደ ክህሎት መመዘኛ ጥያቄዎቹ ለመግባት መረጃዎን ያስገቡ፡</p>
+          <p class="text-gray-400 text-xs mt-1">መረጃዎ በቀጥታ በደመና ዳታቤዝ ውስጥ ይመዘገባል፡</p>
         </div>
 
         <form id="authForm" onsubmit="event.preventDefault(); submitAuth();" class="space-y-4">
@@ -249,14 +163,14 @@
             <input type="email" id="authEmail" required placeholder="you@example.com" class="w-full bg-[#1b202d] border border-brandBorder rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-brandAmber transition">
           </div>
 
-          <button type="submit" class="w-full bg-brandAmber hover:bg-brandAmberHover text-black font-extrabold py-3.5 rounded-xl transition text-sm shadow-lg shadow-brandAmber/20">
+          <button type="submit" id="authSubmitBtn" class="w-full bg-brandAmber hover:bg-brandAmberHover text-black font-extrabold py-3.5 rounded-xl transition text-sm shadow-lg shadow-brandAmber/20">
             ግባና ወደ ፈተናው እለፍ (Continue)
           </button>
         </form>
       </div>
     </section>
 
-    <!-- ================= VIEW 3: 5-QUESTION ASSESSMENT ================= -->
+    <!-- VIEW 3: 5-QUESTION ASSESSMENT -->
     <section id="view-assessment" class="hidden max-w-2xl mx-auto space-y-6">
       <div class="bg-brandCard border border-brandBorder rounded-3xl p-6 sm:p-8 shadow-2xl">
         <div class="border-b border-brandBorder pb-4 mb-6">
@@ -270,7 +184,7 @@
             <p class="text-sm font-semibold text-white">1. የድረ-ገጽ አጽም ወይም ዋና መዋቅር ለመገንባት የሚያገለግለው ቋንቋ የቱ ነው?</p>
             <div class="space-y-1 text-xs text-gray-300">
               <label class="flex items-center gap-2 p-1.5 hover:bg-brandBorder cursor-pointer"><input type="radio" name="q1" value="A" required class="accent-brandAmber"> CSS</label>
-              <label class="flex items-center gap-2 p-1.5 hover:bg-brandBorder cursor-pointer"><input type="radio" name="q1" value="B" class="accent-brandAmber"> HTML (ትክክለኛ)</label>
+              <label class="flex items-center gap-2 p-1.5 hover:bg-brandBorder cursor-pointer"><input type="radio" name="q1" value="B" class="accent-brandAmber"> HTML</label>
               <label class="flex items-center gap-2 p-1.5 hover:bg-brandBorder cursor-pointer"><input type="radio" name="q1" value="C" class="accent-brandAmber"> Python</label>
             </div>
           </div>
@@ -278,7 +192,7 @@
           <div class="bg-[#1a1f2b] p-4 rounded-xl border border-brandBorder space-y-2">
             <p class="text-sm font-semibold text-white">2. የድረ-ገጽ ውበት፣ ቀለሞች እና አቀማመጥ (Styling) የሚስተካከለው በየትኛው ነው?</p>
             <div class="space-y-1 text-xs text-gray-300">
-              <label class="flex items-center gap-2 p-1.5 hover:bg-brandBorder cursor-pointer"><input type="radio" name="q2" value="A" required class="accent-brandAmber"> CSS (ትክክለኛ)</label>
+              <label class="flex items-center gap-2 p-1.5 hover:bg-brandBorder cursor-pointer"><input type="radio" name="q2" value="A" required class="accent-brandAmber"> CSS</label>
               <label class="flex items-center gap-2 p-1.5 hover:bg-brandBorder cursor-pointer"><input type="radio" name="q2" value="B" class="accent-brandAmber"> SQL</label>
             </div>
           </div>
@@ -286,7 +200,7 @@
           <div class="bg-[#1a1f2b] p-4 rounded-xl border border-brandBorder space-y-2">
             <p class="text-sm font-semibold text-white">3. በድረ-ገጽ ላይ አዝራሮች ሲነኩ ስሌቶችንና ተግባራትን የሚሰራው የትኛው ነው?</p>
             <div class="space-y-1 text-xs text-gray-300">
-              <label class="flex items-center gap-2 p-1.5 hover:bg-brandBorder cursor-pointer"><input type="radio" name="q3" value="A" required class="accent-brandAmber"> JavaScript (ትክክለኛ)</label>
+              <label class="flex items-center gap-2 p-1.5 hover:bg-brandBorder cursor-pointer"><input type="radio" name="q3" value="A" required class="accent-brandAmber"> JavaScript</label>
               <label class="flex items-center gap-2 p-1.5 hover:bg-brandBorder cursor-pointer"><input type="radio" name="q3" value="B" class="accent-brandAmber"> HTML</label>
             </div>
           </div>
@@ -314,10 +228,8 @@
       </div>
     </section>
 
-    <!-- ================= VIEW 4: LEARNING PORTAL ================= -->
+    <!-- VIEW 4: LEARNING PORTAL -->
     <section id="view-portal" class="hidden space-y-6">
-      
-      <!-- Progress Bar -->
       <div class="bg-brandCard border border-brandBorder rounded-2xl p-5 shadow-xl flex flex-col sm:flex-row justify-between items-center gap-4">
         <div>
           <span class="text-brandAmber text-xs font-bold uppercase tracking-wider block">የስልጠና ሂደት</span>
@@ -334,19 +246,14 @@
         </div>
       </div>
 
-      <!-- Modules List & Reader -->
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        
-        <!-- Left: 20 Module Selector -->
         <div class="lg:col-span-4 bg-brandCard border border-brandBorder rounded-2xl p-4 max-h-[600px] overflow-y-auto custom-scrollbar space-y-2">
           <h3 class="text-xs font-bold text-gray-400 uppercase tracking-wider px-2 py-1">የትምህርት ክፍሎች</h3>
           <div id="moduleListContainer" class="space-y-1.5"></div>
         </div>
 
-        <!-- Right: In-App Reader & PDF Download Button -->
         <div class="lg:col-span-8 space-y-6">
           <div class="bg-brandCard border border-brandBorder rounded-2xl p-5 sm:p-6 shadow-2xl space-y-4">
-            
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 border-b border-brandBorder pb-4">
               <div>
                 <span id="currentLessonBadge" class="text-brandAmber text-xs font-bold uppercase">MODULE 1 OF 20</span>
@@ -361,15 +268,11 @@
                 </button>
               </div>
             </div>
-
-            <!-- Reading Box -->
             <div id="lessonReadingBox" class="bg-[#0e121a] p-5 rounded-xl border border-brandBorder text-xs sm:text-sm text-gray-300 leading-relaxed max-h-96 overflow-y-auto custom-scrollbar space-y-3"></div>
           </div>
         </div>
-
       </div>
 
-      <!-- Capstone Section -->
       <div id="capstoneSection" class="hidden bg-gradient-to-r from-brandCard via-[#151a27] to-brandCard border border-brandAmber/40 rounded-3xl p-6 sm:p-8 text-center space-y-4 shadow-2xl">
         <div class="w-14 h-14 rounded-2xl bg-brandAmber/10 border border-brandAmber text-brandAmber flex items-center justify-center text-3xl mx-auto">🎓</div>
         <h3 class="text-2xl font-black text-white">እንኳን ደስ አለዎት! 20ውም ክፍሎች ተጠናቀዋል</h3>
@@ -384,17 +287,15 @@
           </button>
         </div>
       </div>
-
     </section>
 
-    <!-- ================= VIEW 5: CONTACT SECTION ================= -->
+    <!-- VIEW 5: CONTACT SECTION -->
     <section id="view-contact" class="hidden max-w-xl mx-auto space-y-6">
       <div class="bg-brandCard border border-brandBorder rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6">
         <div class="text-center">
           <h2 class="text-2xl font-bold text-white">አግኙኝ (Contact SudX)</h2>
           <p class="text-gray-400 text-xs mt-1">ለማንኛውም የኮዲንግ ጥያቄ ወይም ድጋፍ በሚከተሉት አድራሻዎች ልታገኙኝ ትችላላችሁ፡</p>
         </div>
-
         <div class="space-y-3">
           <div class="bg-[#1b202d] p-4 rounded-xl border border-brandBorder flex items-center justify-between">
             <div>
@@ -403,7 +304,6 @@
             </div>
             <a href="tel:+251914642252" class="text-xs bg-brandBorder hover:bg-brandAmber hover:text-black transition px-3 py-1.5 rounded-lg">ደውል</a>
           </div>
-
           <div class="bg-[#1b202d] p-4 rounded-xl border border-brandBorder flex items-center justify-between">
             <div>
               <span class="text-xs text-gray-400 block">✉️ ኢሜል አድራሻ:</span>
@@ -411,7 +311,6 @@
             </div>
             <a href="mailto:prosudi9@gmail.com" class="text-xs bg-brandBorder hover:bg-brandAmber hover:text-black transition px-3 py-1.5 rounded-lg">ኢሜል ላክ</a>
           </div>
-
           <div class="bg-[#1b202d] p-4 rounded-xl border border-brandBorder flex items-center justify-between">
             <div>
               <span class="text-xs text-gray-400 block">✈️ ቴሌግራም ቻናል:</span>
@@ -420,31 +319,36 @@
             <a href="https://t.me/SudX_Dev" target="_blank" class="text-xs bg-brandBorder hover:bg-brandAmber hover:text-black transition px-3 py-1.5 rounded-lg">ይቀላቀሉ</a>
           </div>
         </div>
-
-        <button onclick="navigateTo('home')" class="w-full bg-brandBorder hover:bg-brandAmber hover:text-black text-gray-300 font-bold py-3 rounded-xl transition text-xs">
-          ← ወደ ዋና ገጽ ተመለስ
-        </button>
+        <button onclick="navigateTo('home')" class="w-full bg-brandBorder hover:bg-brandAmber hover:text-black text-gray-300 font-bold py-3 rounded-xl transition text-xs">← ወደ ዋና ገጽ ተመለስ</button>
       </div>
     </section>
 
   </main>
 
-  <!-- ================= FOOTER ================= -->
   <footer class="border-t border-brandBorder bg-[#0a0c10] py-6 px-4 text-center text-xs text-gray-500">
     <p>© 2026 SudX Free Course Academy. Created by ሱዴክስ (@sudx_dev). Built for students & devs.</p>
   </footer>
 
-  <!-- ================= APPLICATION LOGIC ================= -->
+  <!-- APPLICATION LOGIC & SUPABASE INTEGRATION -->
   <script>
+    // -------------------------------------------------------------
+    // 1. SUPABASE DATABASE CONFIGURATION (Live Credentials)
+    // -------------------------------------------------------------
+    const SUPABASE_URL = "https://duqzyllknbaefcaykllm.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_WZGE5uc7kndyfko1KYQM7A_zomtsERu";
+    
+    // Supabase client instance
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
     // 20 Modules with Real Google Drive Links
     const curriculumData = [
-      { id: 1, title: "HTML መግቢያና መሰረታዊ መዋቅር", file: "https://drive.google.com/file/d/1Vd722IPEP4oNwusS-KAI6BznoO2I-B5S/view?usp=drivesdk", reading: "HTML (HyperText Markup Language) የድረ-ገጽ ዋና አጽም ነው። በዚህ ክፍል <!DOCTYPE html>, <html>, <head>, እና <body> ታጎች ለምን እንደሚያገለግሉ እንማራለን።" },
+      { id: 1, title: "HTML መግቢያና መሰረታዊ መዋቅር", file: "https://drive.google.com/file/d/1Vd722IPEP4oNwusS-KAI6BznoO2I-B5S/view?usp=drivesdk", reading: "HTML የድረ-ገጽ ዋና አጽም ነው። በዚህ ክፍል <!DOCTYPE html>, <html>, <head>, እና <body> ታጎች ለምን እንደሚያገለግሉ እንማራለን።" },
       { id: 2, title: "HTML ጽሑፎችና አንቀጾች (Headings & Paragraphs)", file: "https://drive.google.com/file/d/1Wzf7u_8n8e1UQfMmC3Y6ijKecxz4KL5e/view?usp=drivesdk", reading: "ከ <h1> እስከ <h6> ያሉ ርዕሶች እና <p> አንቀጾች የድረ-ገጽን ይዘት በስርአት ለማደራጀት ያገለግላሉ።" },
       { id: 3, title: "ሊንኮችና ምስሎች (Links & Images)", file: "https://drive.google.com/file/d/1rPfBUaXV2mHOZKzYbNcexGHbBSSg9EoF/view?usp=drivesdk", reading: "የ <a> ታግ ተጠቃሚዎችን ወደ ተለያዩ ገጾች ሲያገናኝ፣ <img> ታግ ደግሞ ምስሎችን በስክሪኑ ላይ ያሳያል።" },
       { id: 4, title: "ዝርዝሮችና ሰንጠረዦች (Lists & Tables)", file: "https://drive.google.com/file/d/16dEonifP3AH7SXEInS9MHwNnj5WCyhFR/view?usp=drivesdk", reading: "የተደራጁ (<ol>) እና ያልተደራጁ (<ul>) ዝርዝሮች፤ እንዲሁም የ <table> አሰራር።" },
       { id: 5, title: "የቅጾች አሰራር (Forms & Inputs)", file: "https://drive.google.com/file/d/1oiw4L8MOlypxzINo-zzCqgp6RiddXFGQ/view?usp=drivesdk", reading: "የተጠቃሚዎችን መረጃ ለመቀበል የሚያስችሉ የ <input>, <textarea>, እና <button> ታጎች ጥልቅ አጠቃቀም።" },
       { id: 6, title: "የሲኤስኤስ መሰረታዊያን (CSS Syntax & Selectors)", file: "https://drive.google.com/file/d/1eY3Yuy7i8VEbuw7SI3DeNoYiC6DtTKy-/view?usp=drivesdk", reading: "CSS ለድረ-ገጾች ውበት የሚሰጥ ሲሆን፤ Class (.), ID (#), እና Element ሴሌክተሮችን እንዴት እንደምንጠቀም እንማራለን።" },
-      { id: 7, title: "የቦክስ ሞዴል (CSS Box Model: Margin, Padding)", file: "https://drive.google.com/file/d/1lBqk6iFevMhjaPBT18FFTHIpk1KToByr/view?usp=drivesdk", reading: "እያንዳንዱ የኤችቲኤምኤል አካል ሳጥን (Box) ነው። Margin, Border, Padding እና Content ልዩነታቸውን ይረዱ።" },
+      { id: 7, title: "የቦክስ ሞዴል (CSS Box Model: Margin, Padding)", file: "https://drive.google.com/file/d/1lBqk6iFevMhjaPBT18FFTHIpk1KToByr/view?usp=drivesdk", reading: "እያንዳንዱ የኤችቲኤምኤል አካል ሳጥን ነው። Margin, Border, Padding እና Content ልዩነታቸውን ይረዱ።" },
       { id: 8, title: "CSS ቀለሞችና ዳራዎች (Colors & Backgrounds)", file: "https://drive.google.com/file/d/1_xm6pI8RRuu4gpuXj7u6Ddl8gkdtD0se/view?usp=drivesdk", reading: "HEX (#f59e0b), RGB, HSL ቀለሞች እና ያማሩ Gradients አጠቃቀም።" },
       { id: 9, title: "Flexbox Layout (ቀላል አቀማመጥ)", file: "https://drive.google.com/file/d/1H993ItdTqyXsmqNv9yrLESD3E8nL-iAS/view?usp=drivesdk", reading: "flex-direction, justify-content, እና align-items በመጠቀም ንጥረ-ነገሮችን በአግድም እና በቁመት ማስተካከል።" },
       { id: 10, title: "CSS Grid System (ባለ 2-አቅጣጫ አቀማመጥ)", file: "https://drive.google.com/file/d/1G0Fc-HVBu7ORGGXsD4BOur74LCW1jyTI/view?usp=drivesdk", reading: "ግሪድ በመጠቀም ውስብስብና ዘመናዊ የድረ-ገጽ አቀማመጦችን በካርድ መልክ ማዋቀር።" },
@@ -500,7 +404,8 @@
       else if (viewName === 'contact') document.getElementById('view-contact').classList.remove('hidden');
     }
 
-    function submitAuth() {
+    // AUTH SUBMISSION WITH REAL SUPABASE SYNC
+    async function submitAuth() {
       const name = document.getElementById('authName').value.trim();
       const email = document.getElementById('authEmail').value.trim();
       if (!name || !email) return;
@@ -508,6 +413,14 @@
       currentStudent.name = name;
       currentStudent.email = email;
       saveStudent();
+
+      // Insert Student directly into Supabase Table
+      try {
+        const { error } = await supabase.from('students').insert([{ name: name, email: email, progress: 0 }]);
+        if (error) console.log("Supabase insert notice:", error.message);
+      } catch (e) {
+        console.log("Database write error:", e);
+      }
 
       document.getElementById('userStatusBadge').classList.remove('hidden');
       navigateTo('assessment');
@@ -567,10 +480,21 @@
       renderModuleList();
     }
 
-    function markCurrentLessonComplete() {
+    async function markCurrentLessonComplete() {
       if (!currentStudent.completedModules.includes(activeLessonId)) {
         currentStudent.completedModules.push(activeLessonId);
         saveStudent();
+
+        // Update progress in Supabase Table
+        if (currentStudent.email) {
+          try {
+            await supabase.from('students')
+              .update({ progress: currentStudent.completedModules.length })
+              .eq('email', currentStudent.email);
+          } catch (e) {
+            console.log("Supabase progress sync error:", e);
+          }
+        }
       }
 
       updateProgressUI();
@@ -596,7 +520,6 @@
       }
     }
 
-    // Direct A4 Landscape Gold PDF Generator
     function downloadOfficialPDFCert() {
       const url = document.getElementById('capstoneUrl').value.trim();
       if (!url) {
