@@ -9,7 +9,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Cinzel:wght@700&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
   
-  <!-- Tailwind CSS, Supabase SDK & jsPDF Generator -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -61,7 +60,7 @@
       <span id="userStatusBadge" class="hidden text-xs bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 px-3 py-1 rounded-full font-medium">
         ● Online
       </span>
-      <button onclick="toggleDrawer()" class="p-2 text-gray-300 hover:text-brandAmber transition rounded-lg hover:bg-brandBorder">
+      <button type="button" onclick="toggleDrawer()" class="p-2 text-gray-300 hover:text-brandAmber transition rounded-lg hover:bg-brandBorder">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M4 6h16M4 12h16M4 18h16"></path>
         </svg>
@@ -74,19 +73,19 @@
     <div>
       <div class="flex justify-between items-center pb-5 border-b border-brandBorder">
         <span class="text-brandAmber font-bold text-lg">SudX Menu</span>
-        <button onclick="toggleDrawer()" class="text-gray-400 hover:text-white p-1 rounded-lg">
+        <button type="button" onclick="toggleDrawer()" class="text-gray-400 hover:text-white p-1 rounded-lg">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
         </button>
       </div>
 
       <nav class="flex flex-col gap-3 mt-6">
-        <button onclick="navigateTo('home')" class="flex items-center gap-3 w-full text-left px-4 py-3 rounded-xl hover:bg-brandBorder text-gray-200 hover:text-brandAmber transition font-medium">
+        <button type="button" onclick="navigateTo('home')" class="flex items-center gap-3 w-full text-left px-4 py-3 rounded-xl hover:bg-brandBorder text-gray-200 hover:text-brandAmber transition font-medium">
           🏠 Home (ዋና ገጽ)
         </button>
-        <button onclick="navigateTo('auth')" class="flex items-center gap-3 w-full text-left px-4 py-3 rounded-xl hover:bg-brandBorder text-gray-200 hover:text-brandAmber transition font-medium">
+        <button type="button" onclick="navigateTo('auth')" class="flex items-center gap-3 w-full text-left px-4 py-3 rounded-xl hover:bg-brandBorder text-gray-200 hover:text-brandAmber transition font-medium">
           🔑 Login / Register
         </button>
-        <button onclick="navigateTo('contact')" class="flex items-center gap-3 w-full text-left px-4 py-3 rounded-xl hover:bg-brandBorder text-gray-200 hover:text-brandAmber transition font-medium">
+        <button type="button" onclick="navigateTo('contact')" class="flex items-center gap-3 w-full text-left px-4 py-3 rounded-xl hover:bg-brandBorder text-gray-200 hover:text-brandAmber transition font-medium">
           📞 Contact Me (አግኙኝ)
         </button>
       </nav>
@@ -134,7 +133,7 @@
             </div>
 
             <div class="pt-4">
-              <button onclick="navigateTo('auth')" class="bg-brandAmber hover:bg-brandAmberHover text-black font-extrabold px-8 py-3.5 rounded-2xl shadow-xl shadow-brandAmber/25 transition text-sm">
+              <button type="button" onclick="navigateTo('auth')" class="bg-brandAmber hover:bg-brandAmberHover text-black font-extrabold px-8 py-3.5 rounded-2xl shadow-xl shadow-brandAmber/25 transition text-sm">
                 ትምህርቱን ለመጀመር ተመዝገብ / ግባ →
               </button>
             </div>
@@ -152,21 +151,21 @@
           <p class="text-gray-400 text-xs mt-1">መረጃዎ በቀጥታ በደመና ዳታቤዝ ውስጥ ይመዘገባል፡</p>
         </div>
 
-        <form id="authForm" onsubmit="event.preventDefault(); submitAuth();" class="space-y-4">
+        <div class="space-y-4">
           <div>
             <label class="block text-xs font-semibold text-gray-300 mb-1">ሙሉ ስም (ለሰርቲፊኬት የሚሆን)</label>
-            <input type="text" id="authName" required placeholder="ለምሳሌ: አቤል በቀለ" class="w-full bg-[#1b202d] border border-brandBorder rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-brandAmber transition">
+            <input type="text" id="authName" placeholder="ለምሳሌ: አቤል በቀለ" class="w-full bg-[#1b202d] border border-brandBorder rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-brandAmber transition">
           </div>
 
           <div>
             <label class="block text-xs font-semibold text-gray-300 mb-1">ኢሜል (Email)</label>
-            <input type="email" id="authEmail" required placeholder="you@example.com" class="w-full bg-[#1b202d] border border-brandBorder rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-brandAmber transition">
+            <input type="email" id="authEmail" placeholder="you@example.com" class="w-full bg-[#1b202d] border border-brandBorder rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-brandAmber transition">
           </div>
 
-          <button type="submit" id="authSubmitBtn" class="w-full bg-brandAmber hover:bg-brandAmberHover text-black font-extrabold py-3.5 rounded-xl transition text-sm shadow-lg shadow-brandAmber/20">
+          <button type="button" onclick="submitAuth()" id="authSubmitBtn" class="w-full bg-brandAmber hover:bg-brandAmberHover text-black font-extrabold py-3.5 rounded-xl transition text-sm shadow-lg shadow-brandAmber/20">
             ግባና ወደ ፈተናው እለፍ (Continue)
           </button>
-        </form>
+        </div>
       </div>
     </section>
 
@@ -179,11 +178,11 @@
           <p class="text-gray-400 text-xs mt-1">የእውቀት ደረጃዎን ለመለካት እነዚህን 5 ጥያቄዎች ይመልሱ፤ ከዚያ 20ው ሙሉ ኮርሶች ይከፈታሉ፡</p>
         </div>
 
-        <form id="assessmentForm" onsubmit="event.preventDefault(); submitAssessment();" class="space-y-4">
+        <div class="space-y-4">
           <div class="bg-[#1a1f2b] p-4 rounded-xl border border-brandBorder space-y-2">
             <p class="text-sm font-semibold text-white">1. የድረ-ገጽ አጽም ወይም ዋና መዋቅር ለመገንባት የሚያገለግለው ቋንቋ የቱ ነው?</p>
             <div class="space-y-1 text-xs text-gray-300">
-              <label class="flex items-center gap-2 p-1.5 hover:bg-brandBorder cursor-pointer"><input type="radio" name="q1" value="A" required class="accent-brandAmber"> CSS</label>
+              <label class="flex items-center gap-2 p-1.5 hover:bg-brandBorder cursor-pointer"><input type="radio" name="q1" value="A" class="accent-brandAmber"> CSS</label>
               <label class="flex items-center gap-2 p-1.5 hover:bg-brandBorder cursor-pointer"><input type="radio" name="q1" value="B" class="accent-brandAmber"> HTML</label>
               <label class="flex items-center gap-2 p-1.5 hover:bg-brandBorder cursor-pointer"><input type="radio" name="q1" value="C" class="accent-brandAmber"> Python</label>
             </div>
@@ -192,7 +191,7 @@
           <div class="bg-[#1a1f2b] p-4 rounded-xl border border-brandBorder space-y-2">
             <p class="text-sm font-semibold text-white">2. የድረ-ገጽ ውበት፣ ቀለሞች እና አቀማመጥ (Styling) የሚስተካከለው በየትኛው ነው?</p>
             <div class="space-y-1 text-xs text-gray-300">
-              <label class="flex items-center gap-2 p-1.5 hover:bg-brandBorder cursor-pointer"><input type="radio" name="q2" value="A" required class="accent-brandAmber"> CSS</label>
+              <label class="flex items-center gap-2 p-1.5 hover:bg-brandBorder cursor-pointer"><input type="radio" name="q2" value="A" class="accent-brandAmber"> CSS</label>
               <label class="flex items-center gap-2 p-1.5 hover:bg-brandBorder cursor-pointer"><input type="radio" name="q2" value="B" class="accent-brandAmber"> SQL</label>
             </div>
           </div>
@@ -200,7 +199,7 @@
           <div class="bg-[#1a1f2b] p-4 rounded-xl border border-brandBorder space-y-2">
             <p class="text-sm font-semibold text-white">3. በድረ-ገጽ ላይ አዝራሮች ሲነኩ ስሌቶችንና ተግባራትን የሚሰራው የትኛው ነው?</p>
             <div class="space-y-1 text-xs text-gray-300">
-              <label class="flex items-center gap-2 p-1.5 hover:bg-brandBorder cursor-pointer"><input type="radio" name="q3" value="A" required class="accent-brandAmber"> JavaScript</label>
+              <label class="flex items-center gap-2 p-1.5 hover:bg-brandBorder cursor-pointer"><input type="radio" name="q3" value="A" class="accent-brandAmber"> JavaScript</label>
               <label class="flex items-center gap-2 p-1.5 hover:bg-brandBorder cursor-pointer"><input type="radio" name="q3" value="B" class="accent-brandAmber"> HTML</label>
             </div>
           </div>
@@ -208,7 +207,7 @@
           <div class="bg-[#1a1f2b] p-4 rounded-xl border border-brandBorder space-y-2">
             <p class="text-sm font-semibold text-white">4. ዌብሳይት ለስልክ እና ለኮምፒውተር እኩል ተስማሚ (Responsive) እንዲሆን ምን እንጠቀማለን?</p>
             <div class="space-y-1 text-xs text-gray-300">
-              <label class="flex items-center gap-2 p-1.5 hover:bg-brandBorder cursor-pointer"><input type="radio" name="q4" value="A" required class="accent-brandAmber"> Media Queries & Flexbox</label>
+              <label class="flex items-center gap-2 p-1.5 hover:bg-brandBorder cursor-pointer"><input type="radio" name="q4" value="A" class="accent-brandAmber"> Media Queries & Flexbox</label>
               <label class="flex items-center gap-2 p-1.5 hover:bg-brandBorder cursor-pointer"><input type="radio" name="q4" value="B" class="accent-brandAmber"> ፎቶዎችን ብቻ ማስገባት</label>
             </div>
           </div>
@@ -216,15 +215,15 @@
           <div class="bg-[#1a1f2b] p-4 rounded-xl border border-brandBorder space-y-2">
             <p class="text-sm font-semibold text-white">5. የሰራነውን ድረ-ገጽ ለዓለም በነፃ ኦንላይን (Host) ለማድረግ የሚያገለግለው የቱ ነው?</p>
             <div class="space-y-1 text-xs text-gray-300">
-              <label class="flex items-center gap-2 p-1.5 hover:bg-brandBorder cursor-pointer"><input type="radio" name="q5" value="A" required class="accent-brandAmber"> GitHub Pages</label>
+              <label class="flex items-center gap-2 p-1.5 hover:bg-brandBorder cursor-pointer"><input type="radio" name="q5" value="A" class="accent-brandAmber"> GitHub Pages</label>
               <label class="flex items-center gap-2 p-1.5 hover:bg-brandBorder cursor-pointer"><input type="radio" name="q5" value="B" class="accent-brandAmber"> Bluetooth</label>
             </div>
           </div>
 
-          <button type="submit" class="w-full bg-brandAmber hover:bg-brandAmberHover text-black font-extrabold py-3.5 rounded-xl transition text-sm shadow-lg shadow-brandAmber/20">
+          <button type="button" onclick="submitAssessment()" class="w-full bg-brandAmber hover:bg-brandAmberHover text-black font-extrabold py-3.5 rounded-xl transition text-sm shadow-lg shadow-brandAmber/20">
             ውጤቴን መዝግብና 20ውን ኮርሶች ክፈት
           </button>
-        </form>
+        </div>
       </div>
     </section>
 
@@ -263,7 +262,7 @@
                 <a id="downloadPdfLink" href="" target="_blank" class="bg-[#1e2433] hover:border-brandAmber border border-brandBorder text-brandAmber text-xs font-bold px-3.5 py-2 rounded-xl transition flex items-center gap-1.5 shadow-md">
                   📥 Google Drive PDF ክፈት
                 </a>
-                <button onclick="markCurrentLessonComplete()" class="bg-brandAmber hover:bg-brandAmberHover text-black font-extrabold px-4 py-2 rounded-xl text-xs transition">
+                <button type="button" onclick="markCurrentLessonComplete()" class="bg-brandAmber hover:bg-brandAmberHover text-black font-extrabold px-4 py-2 rounded-xl text-xs transition">
                   ጨርሻለሁ ✓
                 </button>
               </div>
@@ -282,7 +281,7 @@
 
         <div class="max-w-md mx-auto flex flex-col sm:flex-row gap-2 pt-2">
           <input type="url" id="capstoneUrl" placeholder="https://yourname.github.io/myproject" class="w-full bg-[#1b202d] border border-brandBorder rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-brandAmber">
-          <button onclick="downloadOfficialPDFCert()" class="bg-brandAmber hover:bg-brandAmberHover text-black font-extrabold px-6 py-3 rounded-xl text-xs transition shrink-0">
+          <button type="button" onclick="downloadOfficialPDFCert()" class="bg-brandAmber hover:bg-brandAmberHover text-black font-extrabold px-6 py-3 rounded-xl text-xs transition shrink-0">
             📥 PDF ሰርቲፊኬት አውርድ
           </button>
         </div>
@@ -319,7 +318,7 @@
             <a href="https://t.me/SudX_Dev" target="_blank" class="text-xs bg-brandBorder hover:bg-brandAmber hover:text-black transition px-3 py-1.5 rounded-lg">ይቀላቀሉ</a>
           </div>
         </div>
-        <button onclick="navigateTo('home')" class="w-full bg-brandBorder hover:bg-brandAmber hover:text-black text-gray-300 font-bold py-3 rounded-xl transition text-xs">← ወደ ዋና ገጽ ተመለስ</button>
+        <button type="button" onclick="navigateTo('home')" class="w-full bg-brandBorder hover:bg-brandAmber hover:text-black text-gray-300 font-bold py-3 rounded-xl transition text-xs">← ወደ ዋና ገጽ ተመለስ</button>
       </div>
     </section>
 
@@ -331,16 +330,18 @@
 
   <!-- APPLICATION LOGIC & SUPABASE INTEGRATION -->
   <script>
-    // -------------------------------------------------------------
-    // 1. SUPABASE DATABASE CONFIGURATION (Live Credentials)
-    // -------------------------------------------------------------
     const SUPABASE_URL = "https://duqzyllknbaefcaykllm.supabase.co";
     const SUPABASE_KEY = "sb_publishable_WZGE5uc7kndyfko1KYQM7A_zomtsERu";
     
-    // Supabase client instance
-    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    let supabase = null;
+    try {
+      if (window.supabase) {
+        supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+      }
+    } catch(err) {
+      console.warn("Supabase init error:", err);
+    }
 
-    // 20 Modules with Real Google Drive Links
     const curriculumData = [
       { id: 1, title: "HTML መግቢያና መሰረታዊ መዋቅር", file: "https://drive.google.com/file/d/1Vd722IPEP4oNwusS-KAI6BznoO2I-B5S/view?usp=drivesdk", reading: "HTML የድረ-ገጽ ዋና አጽም ነው። በዚህ ክፍል <!DOCTYPE html>, <html>, <head>, እና <body> ታጎች ለምን እንደሚያገለግሉ እንማራለን።" },
       { id: 2, title: "HTML ጽሑፎችና አንቀጾች (Headings & Paragraphs)", file: "https://drive.google.com/file/d/1Wzf7u_8n8e1UQfMmC3Y6ijKecxz4KL5e/view?usp=drivesdk", reading: "ከ <h1> እስከ <h6> ያሉ ርዕሶች እና <p> አንቀጾች የድረ-ገጽን ይዘት በስርአት ለማደራጀት ያገለግላሉ።" },
@@ -364,65 +365,91 @@
       { id: 20, title: "Capstone Project: የመጨረሻ ዌብሳይት ግንባታ", file: "https://drive.google.com/file/d/1dV0wtt0O8dmZm7tMVKM4WvP3LahN21iy/view?usp=drivesdk", reading: "የተማርከውን ሁሉ አጣምረህ የራስህን ባለ 1 ገጽ Portfolio ዌብሳይት ሰርተህ ሰርቲፊኬትህን ውሰድ!" }
     ];
 
-    let currentStudent = { name: "", email: "", completedModules: [] };
+    let currentStudent = { name: "", email: "", assessmentDone: false, completedModules: [] };
     let activeLessonId = 1;
 
     window.addEventListener('DOMContentLoaded', () => {
-      const saved = localStorage.getItem('sudx_student');
-      if (saved) {
-        currentStudent = JSON.parse(saved);
-        updateProgressUI();
-        document.getElementById('userStatusBadge').classList.remove('hidden');
-      }
+      try {
+        const saved = localStorage.getItem('sudx_student');
+        if (saved) {
+          currentStudent = JSON.parse(saved);
+          if (!currentStudent.completedModules) currentStudent.completedModules = [];
+          updateProgressUI();
+          document.getElementById('userStatusBadge').classList.remove('hidden');
+        }
+      } catch(e) {}
+
       renderModuleList();
       loadLesson(1);
     });
 
     function toggleDrawer() {
-      document.getElementById('sideDrawer').classList.toggle('translate-x-full');
-      document.getElementById('drawerOverlay').classList.toggle('hidden');
+      const drawer = document.getElementById('sideDrawer');
+      const overlay = document.getElementById('drawerOverlay');
+      drawer.classList.toggle('translate-x-full');
+      overlay.classList.toggle('hidden');
     }
 
     function navigateTo(viewName) {
       ['view-home', 'view-auth', 'view-assessment', 'view-portal', 'view-contact'].forEach(id => {
-        document.getElementById(id).classList.add('hidden');
+        const el = document.getElementById(id);
+        if (el) el.classList.add('hidden');
       });
 
-      document.getElementById('sideDrawer').classList.add('translate-x-full');
-      document.getElementById('drawerOverlay').classList.add('hidden');
+      const drawer = document.getElementById('sideDrawer');
+      const overlay = document.getElementById('drawerOverlay');
+      if (drawer) drawer.classList.add('translate-x-full');
+      if (overlay) overlay.classList.add('hidden');
+
       window.scrollTo({ top: 0, behavior: 'smooth' });
 
-      if (viewName === 'home') document.getElementById('view-home').classList.remove('hidden');
-      else if (viewName === 'auth') {
+      if (viewName === 'home') {
+        document.getElementById('view-home').classList.remove('hidden');
+      } else if (viewName === 'auth') {
         if (currentStudent.name && currentStudent.assessmentDone) {
           document.getElementById('view-portal').classList.remove('hidden');
         } else {
           document.getElementById('view-auth').classList.remove('hidden');
         }
-      } else if (viewName === 'assessment') document.getElementById('view-assessment').classList.remove('hidden');
-      else if (viewName === 'portal') document.getElementById('view-portal').classList.remove('hidden');
-      else if (viewName === 'contact') document.getElementById('view-contact').classList.remove('hidden');
+      } else if (viewName === 'assessment') {
+        document.getElementById('view-assessment').classList.remove('hidden');
+      } else if (viewName === 'portal') {
+        document.getElementById('view-portal').classList.remove('hidden');
+      } else if (viewName === 'contact') {
+        document.getElementById('view-contact').classList.remove('hidden');
+      }
     }
 
-    // AUTH SUBMISSION WITH REAL SUPABASE SYNC
-    async function submitAuth() {
-      const name = document.getElementById('authName').value.trim();
-      const email = document.getElementById('authEmail').value.trim();
-      if (!name || !email) return;
+    function submitAuth() {
+      const nameInput = document.getElementById('authName');
+      const emailInput = document.getElementById('authEmail');
+      const name = nameInput ? nameInput.value.trim() : "";
+      const email = emailInput ? emailInput.value.trim() : "";
+
+      if (!name) {
+        alert("እባክዎ ሙሉ ስምዎን ያስገቡ!");
+        return;
+      }
+      if (!email) {
+        alert("እባክዎ ኢሜልዎን ያስገቡ!");
+        return;
+      }
 
       currentStudent.name = name;
       currentStudent.email = email;
       saveStudent();
 
-      // Insert Student directly into Supabase Table
-      try {
-        const { error } = await supabase.from('students').insert([{ name: name, email: email, progress: 0 }]);
-        if (error) console.log("Supabase insert notice:", error.message);
-      } catch (e) {
-        console.log("Database write error:", e);
+      document.getElementById('userStatusBadge').classList.remove('hidden');
+
+      // Async DB write in background without blocking screen navigation
+      if (supabase) {
+        supabase.from('students').insert([{ name: name, email: email, progress: 0 }])
+          .then(({ error }) => {
+            if (error) console.log("DB Insert Notice:", error.message);
+          })
+          .catch(err => console.log("DB Network Notice:", err));
       }
 
-      document.getElementById('userStatusBadge').classList.remove('hidden');
       navigateTo('assessment');
     }
 
@@ -435,13 +462,15 @@
 
     function renderModuleList() {
       const container = document.getElementById('moduleListContainer');
+      if (!container) return;
       container.innerHTML = "";
 
       curriculumData.forEach(item => {
-        const isCompleted = currentStudent.completedModules.includes(item.id);
+        const isCompleted = currentStudent.completedModules && currentStudent.completedModules.includes(item.id);
         const isActive = item.id === activeLessonId;
 
         const btn = document.createElement('button');
+        btn.type = "button";
         btn.onclick = () => loadLesson(item.id);
         btn.className = `w-full text-left p-3 rounded-xl border text-xs transition flex items-center justify-between gap-2 ${
           isActive ? 'bg-brandAmber/10 border-brandAmber text-brandAmber font-bold' : 'bg-[#181d28] border-brandBorder text-gray-300 hover:border-gray-500'
@@ -480,20 +509,19 @@
       renderModuleList();
     }
 
-    async function markCurrentLessonComplete() {
+    function markCurrentLessonComplete() {
+      if (!currentStudent.completedModules) currentStudent.completedModules = [];
+
       if (!currentStudent.completedModules.includes(activeLessonId)) {
         currentStudent.completedModules.push(activeLessonId);
         saveStudent();
 
-        // Update progress in Supabase Table
-        if (currentStudent.email) {
-          try {
-            await supabase.from('students')
-              .update({ progress: currentStudent.completedModules.length })
-              .eq('email', currentStudent.email);
-          } catch (e) {
-            console.log("Supabase progress sync error:", e);
-          }
+        if (supabase && currentStudent.email) {
+          supabase.from('students')
+            .update({ progress: currentStudent.completedModules.length })
+            .eq('email', currentStudent.email)
+            .then(() => {})
+            .catch(e => console.log("DB sync notice:", e));
         }
       }
 
@@ -521,55 +549,63 @@
     }
 
     function downloadOfficialPDFCert() {
-      const url = document.getElementById('capstoneUrl').value.trim();
+      const urlInput = document.getElementById('capstoneUrl');
+      const url = urlInput ? urlInput.value.trim() : "";
+
       if (!url) {
         alert("እባክዎ መጀመሪያ የሰሩትን የዌብሳይት ሊንክ ያስገቡ!");
         return;
       }
 
-      const { jsPDF } = window.jspdf;
-      const doc = new jsPDF({ orientation: "landscape", unit: "pt", format: "a4" });
+      try {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF({ orientation: "landscape", unit: "pt", format: "a4" });
 
-      doc.setFillColor(10, 12, 16);
-      doc.rect(0, 0, 842, 595, "F");
+        doc.setFillColor(10, 12, 16);
+        doc.rect(0, 0, 842, 595, "F");
 
-      doc.setDrawColor(245, 158, 11);
-      doc.setLineWidth(4);
-      doc.rect(20, 20, 802, 555);
+        doc.setDrawColor(245, 158, 11);
+        doc.setLineWidth(4);
+        doc.rect(20, 20, 802, 555);
 
-      doc.setTextColor(245, 158, 11);
-      doc.setFont("helvetica", "bold");
-      doc.setFontSize(28);
-      doc.text("SUDX TECH ACADEMY", 421, 110, { align: "center" });
+        doc.setTextColor(245, 158, 11);
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(28);
+        doc.text("SUDX TECH ACADEMY", 421, 110, { align: "center" });
 
-      doc.setTextColor(255, 255, 255);
-      doc.setFontSize(16);
-      doc.setFont("helvetica", "normal");
-      doc.text("OFFICIAL CERTIFICATE OF COMPLETION", 421, 150, { align: "center" });
+        doc.setTextColor(255, 255, 255);
+        doc.setFontSize(16);
+        doc.setFont("helvetica", "normal");
+        doc.text("OFFICIAL CERTIFICATE OF COMPLETION", 421, 150, { align: "center" });
 
-      doc.setFontSize(14);
-      doc.text("This is proudly presented to:", 421, 210, { align: "center" });
+        doc.setFontSize(14);
+        doc.text("This is proudly presented to:", 421, 210, { align: "center" });
 
-      doc.setTextColor(245, 158, 11);
-      doc.setFontSize(28);
-      doc.setFont("helvetica", "bold");
-      doc.text(currentStudent.name || "Student", 421, 260, { align: "center" });
+        doc.setTextColor(245, 158, 11);
+        doc.setFontSize(28);
+        doc.setFont("helvetica", "bold");
+        doc.text(currentStudent.name || "Student", 421, 260, { align: "center" });
 
-      doc.setTextColor(200, 200, 200);
-      doc.setFontSize(13);
-      doc.setFont("helvetica", "normal");
-      doc.text("For successfully mastering all 20 Web Development Modules (HTML, CSS, JS)", 421, 310, { align: "center" });
-      doc.text("and passing the Final Capstone Project at SudX Academy.", 421, 335, { align: "center" });
+        doc.setTextColor(200, 200, 200);
+        doc.setFontSize(13);
+        doc.setFont("helvetica", "normal");
+        doc.text("For successfully mastering all 20 Web Development Modules (HTML, CSS, JS)", 421, 310, { align: "center" });
+        doc.text("and passing the Final Capstone Project at SudX Academy.", 421, 335, { align: "center" });
 
-      doc.setTextColor(245, 158, 11);
-      doc.setFontSize(14);
-      doc.text("Instructor: SudX (@sudx_dev)", 421, 450, { align: "center" });
+        doc.setTextColor(245, 158, 11);
+        doc.setFontSize(14);
+        doc.text("Instructor: SudX (@sudx_dev)", 421, 450, { align: "center" });
 
-      doc.save(`SudX_Certificate_${currentStudent.name || 'Student'}.pdf`);
+        doc.save(`SudX_Certificate_${currentStudent.name || 'Student'}.pdf`);
+      } catch(e) {
+        alert("ሰርቲፊኬቱን ለማመንጨት ስህተት ተፈጥሯል፤ እባክዎ ገጹን ሪፍሬሽ አድርገው ይሞክሩ።");
+      }
     }
 
     function saveStudent() {
-      localStorage.setItem('sudx_student', JSON.stringify(currentStudent));
+      try {
+        localStorage.setItem('sudx_student', JSON.stringify(currentStudent));
+      } catch(e) {}
     }
   </script>
 
